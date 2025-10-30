@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Registro - LetsGo{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Registro de jugador
+            </div>
+            <div class="card-body">
+                <form method="post" class="row g-3">
+                    <div class="col-12">
+                        <label for="name" class="form-label">Nombre completo</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del jugador" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="position" class="form-label">Posición preferida</label>
+                        <input type="text" class="form-control" id="position" name="position" placeholder="Ej. Delantero, Portero">
+                    </div>
+                    <div class="col-12 d-grid">
+                        <button class="btn btn-primary" type="submit">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}Plantilla - LetsGo{% endblock %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Agregar jugador
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('add_player') }}" method="post" class="row g-2">
+                    <div class="col-12">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Nombre del jugador" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="position" class="form-label">Posición</label>
+                        <input type="text" name="position" id="position" class="form-control" placeholder="Posición o rol">
+                    </div>
+                    <div class="col-12 d-grid">
+                        <button class="btn btn-primary" type="submit">Añadir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <span>Alineación titular</span>
+                <span class="badge bg-light text-success">{{ starting|length }} jugadores</span>
+            </div>
+            <div class="card-body">
+                {% if starting %}
+                    <div class="list-group">
+                        {% for player in starting %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">{{ player.name }}</h5>
+                                        <small class="text-muted">{{ player.position or 'Sin posición' }}</small>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <form action="{{ url_for('toggle_start', player_id=player.id) }}" method="post">
+                                            <button class="btn btn-outline-secondary btn-sm" type="submit">Enviar a banca</button>
+                                        </form>
+                                        {% if player.confirmed %}
+                                            <span class="badge bg-success ms-2">Confirmado</span>
+                                            <form action="{{ url_for('unconfirm_player', player_id=player.id) }}" method="post">
+                                                <button class="btn btn-outline-light btn-sm ms-2" type="submit">Quitar confirmación</button>
+                                            </form>
+                                        {% else %}
+                                            <form action="{{ url_for('confirm_player', player_id=player.id) }}" method="post">
+                                                <button class="btn btn-success btn-sm ms-2" type="submit">Confirmar</button>
+                                            </form>
+                                        {% endif %}
+                                        <form action="{{ url_for('delete_player', player_id=player.id) }}" method="post">
+                                            <button class="btn btn-danger btn-sm ms-2" type="submit">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">No hay jugadores en la alineación titular.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                <span>Jugadores suplentes</span>
+                <span class="badge bg-light text-secondary">{{ bench|length }} jugadores</span>
+            </div>
+            <div class="card-body">
+                {% if bench %}
+                    <div class="list-group">
+                        {% for player in bench %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-1">{{ player.name }}</h5>
+                                        <small class="text-muted">{{ player.position or 'Sin posición' }}</small>
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <form action="{{ url_for('toggle_start', player_id=player.id) }}" method="post">
+                                            <button class="btn btn-outline-success btn-sm" type="submit">Titular</button>
+                                        </form>
+                                        {% if player.confirmed %}
+                                            <span class="badge bg-success ms-2">Confirmado</span>
+                                            <form action="{{ url_for('unconfirm_player', player_id=player.id) }}" method="post">
+                                                <button class="btn btn-outline-secondary btn-sm ms-2" type="submit">Quitar</button>
+                                            </form>
+                                        {% else %}
+                                            <form action="{{ url_for('confirm_player', player_id=player.id) }}" method="post">
+                                                <button class="btn btn-success btn-sm ms-2" type="submit">Confirmar</button>
+                                            </form>
+                                        {% endif %}
+                                        <form action="{{ url_for('delete_player', player_id=player.id) }}" method="post">
+                                            <button class="btn btn-danger btn-sm ms-2" type="submit">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">Agrega jugadores para gestionar la banca.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
