@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Partido - LetsGo{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Información del partido
+            </div>
+            <div class="card-body">
+                <form method="post" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="opponent" class="form-label">Rival</label>
+                        <input type="text" class="form-control" id="opponent" name="opponent" value="{{ team.match.opponent }}" placeholder="Nombre del equipo rival">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="location" class="form-label">Lugar</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ team.match.location }}" placeholder="Campo o dirección">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="date" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ team.match.date }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="time" class="form-label">Hora</label>
+                        <input type="time" class="form-control" id="time" name="time" value="{{ team.match.time }}">
+                    </div>
+                    <div class="col-12 d-grid">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-secondary text-white">
+                Resumen actual
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Rival</dt>
+                    <dd class="col-sm-9">{{ team.match.opponent or 'Por definir' }}</dd>
+                    <dt class="col-sm-3">Fecha</dt>
+                    <dd class="col-sm-9">{{ team.match.date or 'Por definir' }}</dd>
+                    <dt class="col-sm-3">Hora</dt>
+                    <dd class="col-sm-9">{{ team.match.time or 'Por definir' }}</dd>
+                    <dt class="col-sm-3">Lugar</dt>
+                    <dd class="col-sm-9">{{ team.match.location or 'Por definir' }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
